@@ -15,10 +15,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('login');
+    return view('home');
 });
 
-Route::view('register2', 'register2');
 
 Route::post('register', 'userController@store');
 
@@ -26,3 +25,7 @@ Route::post('register', 'userController@store');
 
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Auth::routes();
+
+
