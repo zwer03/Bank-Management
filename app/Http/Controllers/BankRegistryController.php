@@ -120,6 +120,9 @@ class BankRegistryController extends Controller
      */
     public function destroy(BankRegistry $bankRegistry)
     {
-        //
+        $bankRegistry->delete();
+
+        return redirect()->route('bank_registries.index')
+                        ->with('success','Product deleted successfully');
     }
 }
