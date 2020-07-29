@@ -20,3 +20,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::resource('bank_registries','BankRegistryController');
+
+Route::resource('bank_types','BankTypeController');

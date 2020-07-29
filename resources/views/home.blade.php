@@ -30,6 +30,11 @@
                             {{ __('Bank List') }}
                             </a>
                         </li>
+                        <li>
+                            <a class="nav-item" href="">
+                            {{ __('Create Bank Type') }}
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>

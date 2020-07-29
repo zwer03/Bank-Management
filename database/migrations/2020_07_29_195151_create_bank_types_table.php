@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBankRegistriesTable extends Migration
+class CreateBankTypesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,11 @@ class CreateBankRegistriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('bank_registries', function (Blueprint $table) {
+        Schema::create('bank_types', function (Blueprint $table) {
             $table->id();
-            $table->string('bank_name');
-            $table->integer('bank_type_id')->unsigned();
-            $table->string('branch');
-            $table->string('address');
-            $table->string('remarks')->nullable();
+            $table->string('bank_type');
+            $table->string('description')->nullable();
+            $table->integer('isInactive')->default(0);
             $table->timestamps();
         });
     }
@@ -31,6 +29,6 @@ class CreateBankRegistriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('bank_registries');
+        Schema::dropIfExists('bank_types');
     }
 }

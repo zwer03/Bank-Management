@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\BankRegistry;
-use Illuminate\Http\Request;
 use App\BankType;
+use Illuminate\Http\Request;
 
-class BankRegistryController extends Controller
+class BankTypeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +14,7 @@ class BankRegistryController extends Controller
      */
     public function index()
     {
-        
+        //
     }
 
     /**
@@ -25,12 +24,7 @@ class BankRegistryController extends Controller
      */
     public function create()
     {
-        
-        $banktype = \App\BankType::pluck('bank_type', 'id');
-        $selectedid = 1;
-
-        
-        return view('bankregistry.create', compact('selectedid','banktype'));  
+        return view('banktype.create');
     }
 
     /**
@@ -43,27 +37,28 @@ class BankRegistryController extends Controller
     {
         $this->validate(request(),
         [
-            'bank_name'=>['required', 'max:30', 'min:1'],
-            'bank_type_id'=>'required',
-            'branch'=>['required', 'max:30','min:1'],
-            'address'=>['required', 'max:50','min:1'],
-            'remarks'=> ['max:200']
-
+            'bank_type'=>['required', 'max:20', 'min:7', 'regex:/[\w|\d|\s]+/'],
+            'description'=>['max:200', 'nullable'],
+              
+            
+            
+            
 
         ]);
 
-        $bankregistry = BankRegistry::create(request(['bank_name', 'bank_type_id', 'branch', 'address', 'remarks']));
+        $banktype = BankType::create(request(['bank_type', 'description']));
+        
 
-        return redirect()->back()->with('message', 'Bank Registered');
+        return redirect()->back()->with('message', 'Bank Type Created');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\BankRegistry  $bankRegistry
+     * @param  \App\BankType  $bankType
      * @return \Illuminate\Http\Response
      */
-    public function show(BankRegistry $bankRegistry)
+    public function show(BankType $bankType)
     {
         //
     }
@@ -71,34 +66,33 @@ class BankRegistryController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\BankRegistry  $bankRegistry
+     * @param  \App\BankType  $bankType
      * @return \Illuminate\Http\Response
      */
-    public function edit(BankRegistry $bankRegistry)
+    public function edit(BankType $bankType)
     {
-        ;
+        //
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\BankRegistry  $bankRegistry
+     * @param  \App\BankType  $bankType
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, BankRegistry $bankRegistry)
+    public function update(Request $request, BankType $bankType)
     {
-     
-
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\BankRegistry  $bankRegistry
+     * @param  \App\BankType  $bankType
      * @return \Illuminate\Http\Response
      */
-    public function destroy(BankRegistry $bankRegistry)
+    public function destroy(BankType $bankType)
     {
         //
     }
