@@ -15,13 +15,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('home');
+    return view('auth.login');
 });
-
-
-Route::post('register', 'userController@store');
-
-
 
 
 Route::get('/home', 'HomeController@index')->name('home');
