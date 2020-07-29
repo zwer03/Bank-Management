@@ -15,7 +15,10 @@ class BankRegistryController extends Controller
      */
     public function index()
     {
-        
+        $bankRegistries = BankRegistry::latest()->paginate(5);
+  
+        return view('bankregistry.index',compact('bankRegistries'))
+            ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
     /**
@@ -76,7 +79,12 @@ class BankRegistryController extends Controller
      */
     public function edit(BankRegistry $bankRegistry)
     {
-        ;
+
+        $banktype = \App\BankType::pluck('bank_type', 'id');
+        $selectedid = 1;
+
+        
+        return view('bankregistry.edit', compact('bankRegistry', 'banktype')); ;
     }
 
     /**
@@ -89,6 +97,18 @@ class BankRegistryController extends Controller
     public function update(Request $request, BankRegistry $bankRegistry)
     {
      
+        $request->validate([
+            'bank_name'=>['required', 'max:30', 'min:1'],
+            'bank_type_id'=>'required',
+            'branch'=>['required', 'max:30','min:1'],
+            'address'=>['required', 'max:50','min:1'],
+            'remarks'=> ['max:200']
+        ]);
+
+        $bankRegistry->update($request->all());
+
+        return redirect()->route('bank_registries.index')
+                        ->with('success','Product updated successfully');
 
     }
 

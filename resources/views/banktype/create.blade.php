@@ -9,7 +9,17 @@
     
 
 @else
+<div class="container col-lg-12 margin-tb">
+<div class="pull-left">
+    <a class="btn btn-primary" href="{{ route('home') }}"> Back</a>
+</div>
+</div>
+
+
 <div class="container">
+
+
+
 <div class="card-header">{{__('Create Bank Type')}} </div>
 <form method="POST" action="{{route('bank_types.store')}}">
     @csrf

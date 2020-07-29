@@ -21,17 +21,17 @@
                 <div>
                     <ul>
                         <li>
-                            <a class="nav-item" href="">
+                            <a class="nav-item" href="{{route('bank_registries.create')}}">
                             {{ __('Bank Registry') }}
                             </a>
                         </li>
                         <li>
-                            <a class="nav-item" href="">
+                            <a class="nav-item" href="{{route('bank_registries.index')}}">
                             {{ __('Bank List') }}
                             </a>
                         </li>
                         <li>
-                            <a class="nav-item" href="">
+                            <a class="nav-item" href="{{route('bank_types.create')}}">
                             {{ __('Create Bank Type') }}
                             </a>
                         </li>
