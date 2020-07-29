@@ -21,6 +21,11 @@ Route::get('/', function () {
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::get('/banklist', function () {
+    return view('banklist');
+
+});
+
 Auth::routes();
 
 
