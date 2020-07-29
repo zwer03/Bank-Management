@@ -26,6 +26,9 @@ Route::get('/banklist', function () {
 
 });
 
+Route::get('/banklist2', 'BanklistController@list');
+
+Route::redirect('/password/reset', '/home', 301);
 Auth::routes();
 
 

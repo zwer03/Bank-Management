@@ -7,7 +7,11 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">{{ __('Banklist') }}</div>
-
+                <ul>
+                    <li>Bank 1</li>
+                    <li>Bank 2</li>
+                    <li>Bank 3</li>
+                </ul>
                 <div class="card-body">
                     @if (session('status'))
                         <div class="alert alert-success" role="alert">
