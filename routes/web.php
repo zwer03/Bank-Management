@@ -39,6 +39,8 @@ Route::resource('bank_registries','BankRegistryController');
 
 Route::resource('bank_types','BankTypeController');
 
+
+
 Auth::routes();
 
 
