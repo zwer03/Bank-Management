@@ -20,16 +20,15 @@
         <table class="table table-bordered">
         <tr>
             <th>ID</th>
-            <th>Bank Name</th>
             <th>Bank Type</th>
-            <th>Branch</th>
+            <th>Description</th>
         </tr>
-        @foreach ($bankRegistries as $bankRegistry)
+        @foreach ($bankTypes as $bankType)
         <tr>
-            <td><a class="nav-item" href="{{route('bank_registries.edit', $bankRegistry -> id)}}">{{$bankRegistry->id}}</a></td>
-            <td>{{$bankRegistry->bank_name}}</td>
-            <td>{{$bankRegistry->banktype['bank_type']}}</td>
-            <td>{{$bankRegistry->branch}}</td>
+            <td><a class="nav-item" href="{{route('bank_types.edit', $bankType -> id)}}">{{$bankType->id}}</a></td>
+            <td>{{$bankType->bank_type}}</td>
+            <td>{{$bankType->description}}</td>
+    
         @endforeach
 
     

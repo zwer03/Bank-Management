@@ -88,7 +88,7 @@
             <form action="{{route('bank_registries.destroy',$bankRegistry->id)}}" method="POST">
             @csrf
             @method('DELETE')
-            <button style="cursor:pointer" type="delete" class="btn btn-primary">Delete</button>
+            <button style="cursor:pointer" type="submit" onclick="return confirm('Are you sure?')" class="btn btn-primary">Delete</button>
             </form>
         </div>
         
