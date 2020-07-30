@@ -15,8 +15,6 @@
                     @endif
 
                     {{ __('You are logged in!') }}
-<<<<<<< Updated upstream
-=======
                     <div>
                     <ul>
                         <li>
@@ -61,7 +59,8 @@
                         </div>
                     </ul>
                     </div>
->>>>>>> Stashed changes
+                    </ul>
+                    </div>
                 </div>
             </div>
         </div>

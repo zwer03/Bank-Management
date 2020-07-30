@@ -35,6 +35,10 @@ Route::get('/search', 'BankRegistryController@search')->name('wawa');
 
 >>>>>>> Stashed changes
 
+Route::resource('bank_registries','BankRegistryController');
+
+Route::resource('bank_types','BankTypeController');
+
 Auth::routes();
 
 

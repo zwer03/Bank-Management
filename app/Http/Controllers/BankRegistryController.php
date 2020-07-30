@@ -16,15 +16,13 @@ class BankRegistryController extends Controller
     public function index()
     {
 
-        $bankRegistries = BankRegistry::with('banktype')->where('isInactive',0)->get();
+        //$bankRegistries = BankRegistry::with('banktype')->get();
 
-
-
-       //dd($bankRegistries);
-       // $bankRegistries = BankRegistry::latest()->paginate(5);
+       // print_r($bankRegistries);
+        $bankRegistries = BankRegistry::latest()->paginate(5);
 
         return view('bankregistry.index',compact('bankRegistries'))
-        ->with('i', (request()->input('page', 1) - 1) * 5);
+          ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
     /**
@@ -35,7 +33,7 @@ class BankRegistryController extends Controller
     public function create()
     {
 
-        $banktype = \App\BankType::where('isInactive',0)->pluck('bank_type', 'id');
+        $banktype = \App\BankType::pluck('bank_type', 'id');
         $selectedid = 1;
 
 
@@ -124,24 +122,11 @@ class BankRegistryController extends Controller
      * @param  \App\BankRegistry  $bankRegistry
      * @return \Illuminate\Http\Response
      */
-    public function destroy(BankRegistry $bankRegistry, Request $request)
+    public function destroy(BankRegistry $bankRegistry)
     {
-       $bankRegistry->isInactive=1;
-
-       $bankRegistry->save();
-
-
-        // $bankRegistry->delete();
+        $bankRegistry->delete();
 
         return redirect()->route('bank_registries.index')
-                        ->with('success','Bank deleted successfully');
+                        ->with('success','Product deleted successfully');
     }
-
-    public function search(Request $request){
-        $query = $request->input('qwe');
-        $banks = BankRegistry::where('bank_name', 'like', "%$query%")->get();
-
-        return view('bankregistry.search')->with('banks', $banks);
-    }
-
 }
