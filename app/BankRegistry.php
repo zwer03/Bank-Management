@@ -10,6 +10,6 @@ class BankRegistry extends Model
 
 
     public function banktype(){
-        return $this->belongsTo('App\BankType');
+        return $this->belongsTo('App\BankType', 'bank_type_id');
     }
 }
