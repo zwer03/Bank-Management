@@ -14,7 +14,11 @@ class BankTypeController extends Controller
      */
     public function index()
     {
-        $bankTypes = BankType::latest()->paginate(5);
+        $bankTypes = BankType::latest()->whereExists(function ($query) {
+            $query->select(BankType::raw(1))
+                  ->from('bank_types')
+                  ->whereRaw('bank_types."isInactive" = 0');
+        })->paginate(5);
   
         return view('banktype.index',compact('bankTypes'))
           ->with('i', (request()->input('page', 1) - 1) * 5);
@@ -106,11 +110,16 @@ class BankTypeController extends Controller
      * @param  \App\BankType  $bankType
      * @return \Illuminate\Http\Response
      */
-    public function destroy(BankType $bankType)
+    public function destroy(BankType $bankType, Request $request)
     {
-        $bankType->delete();
+        $bankType->isInactive=1;
 
-        return redirect()->route('bank_types.index')
-                        ->with('success','Product deleted successfully');
+        $bankType->save();
+         // $bankRegistry->delete();
+ 
+         return redirect()->route('bank_types.index')
+                         ->with('success','Bank Type deleted successfully');
     }
+
+    
 }

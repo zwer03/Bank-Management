@@ -55,11 +55,12 @@
         <div class="form-group">
             
 
-            <form action="{{route('bank_types.destroy',$bankType->id)}}" method="POST">
+            <<form action="{{route('bank_types.destroy',$bankType->id)}}" method="POST">
             @csrf
             @method('DELETE')
-            <button style="cursor:pointer" onclick="return confirm('Are you sure?')" type="submit" class="btn btn-primary">Delete</button>
+            <button style="cursor:pointer" type="submit" onclick="return confirm('Are you sure?')" class="btn btn-primary">Delete</button>
             </form>
+        
         </div>
         
 
