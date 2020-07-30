@@ -30,6 +30,10 @@ Route::get('/banklist2', 'BanklistController@list');
 
 Route::redirect('password.reset', '/home', 301);
 
+Route::resource('bank_registries','BankRegistryController');
+
+Route::resource('bank_types','BankTypeController');
+
 Auth::routes();
 
 
