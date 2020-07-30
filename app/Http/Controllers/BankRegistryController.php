@@ -35,7 +35,7 @@ class BankRegistryController extends Controller
     public function create()
     {
 
-        $banktype = \App\BankType::pluck('bank_type', 'id');
+        $banktype = \App\BankType::where('isInactive',0)->pluck('bank_type', 'id');
         $selectedid = 1;
 
 
@@ -129,7 +129,7 @@ class BankRegistryController extends Controller
        $bankRegistry->isInactive=1;
 
        $bankRegistry->save();
-        
+
 
         // $bankRegistry->delete();
 
@@ -137,5 +137,5 @@ class BankRegistryController extends Controller
                         ->with('success','Bank deleted successfully');
     }
 
-    
+
 }
