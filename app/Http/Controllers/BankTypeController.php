@@ -14,7 +14,10 @@ class BankTypeController extends Controller
      */
     public function index()
     {
-        //
+        $bankTypes = BankType::latest()->paginate(5);
+  
+        return view('banktype.index',compact('bankTypes'))
+          ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
     /**
@@ -37,7 +40,7 @@ class BankTypeController extends Controller
     {
         $this->validate(request(),
         [
-            'bank_type'=>['required', 'max:20', 'min:7', 'regex:/[\w|\d|\s]+/'],
+            'bank_type'=>['required', 'max:20', 'min:7', 'not_regex:/^[a-zA-Z0-9]{4,10}$/'],
             'description'=>['max:200', 'nullable'],
               
             
@@ -71,7 +74,7 @@ class BankTypeController extends Controller
      */
     public function edit(BankType $bankType)
     {
-        //
+        return view('banktype.edit', compact('bankType')); ;
     }
 
     /**
@@ -83,7 +86,18 @@ class BankTypeController extends Controller
      */
     public function update(Request $request, BankType $bankType)
     {
-        //
+
+        $request->validate([
+
+            'bank_type'=>['required', 'max:20', 'min:7', 'regex:/[a-zA-Z0-9]{4,10}$/'],
+            'description'=>['max:200', 'nullable'],
+            
+        ]);
+
+        $bankType->update($request->all());
+
+        return redirect()->route('bank_types.index')
+                        ->with('success','Product updated successfully');
     }
 
     /**
@@ -94,6 +108,9 @@ class BankTypeController extends Controller
      */
     public function destroy(BankType $bankType)
     {
-        //
+        $bankType->delete();
+
+        return redirect()->route('bank_types.index')
+                        ->with('success','Product deleted successfully');
     }
 }

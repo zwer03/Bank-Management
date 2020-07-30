@@ -32,6 +32,12 @@
                             {{ __('Create Bank Type') }}
                             </a>
                         </li>
+
+                          <li>
+                            <a class="nav-item" href="{{route('bank_types.index')}}">
+                            {{ __('Bank Type List') }}
+                            </a>
+                        </li>
                     </ul>
                     </div>
                 </div>

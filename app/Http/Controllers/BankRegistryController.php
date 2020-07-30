@@ -16,13 +16,13 @@ class BankRegistryController extends Controller
     public function index()
     {
 
-        //$bankRegistries = BankRegistry::with('banktype')->get();
+        $bankRegistries = BankRegistry::with('banktype')->get();
 
-       // print_r($bankRegistries);
-        $bankRegistries = BankRegistry::latest()->paginate(5);
+       //dd($bankRegistries);
+       // $bankRegistries = BankRegistry::latest()->paginate(5);
   
         return view('bankregistry.index',compact('bankRegistries'))
-          ->with('i', (request()->input('page', 1) - 1) * 5);
+        ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
     /**
