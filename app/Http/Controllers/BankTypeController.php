@@ -14,11 +14,7 @@ class BankTypeController extends Controller
      */
     public function index()
     {
-        $bankTypes = BankType::latest()->whereExists(function ($query) {
-            $query->select(BankType::raw(1))
-                  ->from('bank_types')
-                  ->whereRaw('bank_types."isInactive" = 0');
-        })->paginate(5);
+        $bankTypes = BankType::where('isInactive',0)->get();
   
         return view('banktype.index',compact('bankTypes'))
           ->with('i', (request()->input('page', 1) - 1) * 5);

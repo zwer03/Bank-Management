@@ -28,11 +28,17 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/banklist2', 'BanklistController@list');
 
-Route::redirect('password.reset', '/home', 301);
+Route::group(['middleware' => ['auth']], function(){
 
-Route::resource('bank_registries','BankRegistryController');
+    Route::redirect('password.reset', '/home', 301);
 
-Route::resource('bank_types','BankTypeController');
+    Route::resource('bank_registries','BankRegistryController');
+
+    Route::resource('bank_types','BankTypeController');
+
+});
+
+
 
 
 
