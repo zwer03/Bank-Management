@@ -26,9 +26,14 @@ Route::get('/banklist', function () {
 
 });
 
+<<<<<<< Updated upstream
 Route::get('/banklist2', 'BanklistController@list');
 
 Route::redirect('password.reset', '/home', 301);
+=======
+Route::get('/search', 'BankRegistryController@search')->name('wawa');
+
+>>>>>>> Stashed changes
 
 Auth::routes();
 
