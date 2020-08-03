@@ -138,7 +138,7 @@ class BankRegistryController extends Controller
     }
 
     public function search(Request $request){
-        $query = $request->input('qwe');
+        $query = $request->input('query');
         $banks = BankRegistry::where('bank_name', 'like', "%$query%")->get();
 
         return view('bankregistry.search')->with('banks', $banks);
