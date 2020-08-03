@@ -78,12 +78,15 @@
     
     
         </div>
-        <div>
-        <button style="cursor:pointer" type="submit" class="btn btn-primary">Save</button>
+        
+         <div style="float: left; padding: 10px">
+            <button style="cursor:pointer" type="submit" class="btn btn-primary">Save</button>
         </div>
+
         </form>
-        <div class="form-group">
-            
+
+        <div style="float: left; padding: 10px">
+           
 
             <form action="{{route('bank_registries.destroy',$bankRegistry->id)}}" method="POST">
             @csrf
@@ -91,6 +94,7 @@
             <button style="cursor:pointer" type="submit" onclick="return confirm('Are you sure?')" class="btn btn-primary">Delete</button>
             </form>
         </div>
+        
         
 
         @if(session()->has('message'))

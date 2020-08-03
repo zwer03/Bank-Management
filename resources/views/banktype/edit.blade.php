@@ -48,11 +48,12 @@
     
     
         </div>
-        <div class>
+        
+        <div style="float:left; padding: 10px" >
         <button style="cursor:pointer" type="submit" class="btn btn-primary">Save</button>
         </div>
         </form>
-        <div class="form-group">
+        <div style="float:left; padding: 10px;">
             
 
             <form action="{{route('bank_types.destroy',$bankType->id)}}" method="POST">
@@ -62,6 +63,7 @@
             </form>
         
         </div>
+       
         
 
         @if(session()->has('message'))
