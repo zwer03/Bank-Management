@@ -137,5 +137,11 @@ class BankRegistryController extends Controller
                         ->with('success','Bank deleted successfully');
     }
 
+    public function search(Request $request){
+        $query = $request->input('qwe');
+        $banks = BankRegistry::where('bank_name', 'like', "%$query%")->get();
+
+        return view('bankregistry.search')->with('banks', $banks);
+    }
 
 }

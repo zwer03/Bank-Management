@@ -40,7 +40,7 @@ Route::group(['middleware' => ['auth']], function(){
 
 });
 
-
+Route::get('/search', 'BankRegistryController@search')->name('wawa');
 
 
 
