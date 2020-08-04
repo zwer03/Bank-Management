@@ -138,10 +138,19 @@ class BankRegistryController extends Controller
     }
 
     public function search(Request $request){
-        $query = $request->input('query');
-        $banks = BankRegistry::where('bank_name', 'like', "%$query%")->get();
+        switch ($request->input('action')){
+            case 'search':
+                $bnquery = $request->input('bn-query');
+                $btquery = $request->input('bt-query');
+                $banks = BankRegistry::where('bank_name', 'like', "%$bnquery%")->where('bank_type_id', $btquery)->get();
+            break;
 
-        return view('bankregistry.search')->with('banks', $banks);
+            case 'clear':
+                $banks = null;
+            break;
+        }
+        return view('home')->with('banks', $banks);
+
     }
 
 }

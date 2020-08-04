@@ -43,20 +43,54 @@
                         <form class="card card-sm" type="get" action="{{route('search')}}">
                                 <div class="card-body row no-gutters align-items-center">
                                     <div class="col-auto">
-                                        <i class="fas fa-search h4 text-body"></i>
+                                        <h4>Bank Name &nbsp;&nbsp;</h4>
                                     </div>
-                                    <!--end of col-->
                                     <div class="col">
-                                        <input name="query" class="form-control form-control-lg form-control-borderless" type="search" placeholder="Search for bank name">
+                                    <input name="bn-query" class="form-control form-control-lg form-control-borderless" type="search"  value="{{request('bn-query')}}">
                                     </div>
-                                    <!--end of col-->
-                                    <div class="col-auto">
-                                        <button class="btn btn-lg btn-primary" type="submit">Search</button>
-                                    </div>
-                                    <!--end of col-->
                                 </div>
+                                <div class="card-body row no-gutters align-items-center">
+                                    <div class="col-auto">
+                                        <h4>Bank Type &nbsp;&nbsp;&nbsp;&nbsp;</h4>
+                                    </div>
+                                    <div class="col">
+                                        <input name="bt-query" class="form-control form-control-lg form-control-borderless " type="search"  value="{{request('bt-query')}}">
+                                    </div>
+                                 </div>
+                                 <div class="card-body row no-gutters align-items-center">
+                                    <div class="col-auto align=center" >
+                                        <button class="btn btn-lg btn-primary" type="submit" name="action" value="search">Search</button>
+                                        <button class="btn btn-lg btn-primary" type="submit" name="action" value="clear">Clear</button>
+                                    </div>
+                                </div>
+                                <br>
                             </form>
                         </div>
+                        <br>
+                        @if ($banks ?? ''!=null)
+                            <table class="table">
+                                <thead>
+                                  <tr>
+                                    <th scope="col">Bank ID</th>
+                                    <th scope="col">Bank</th>
+                                    <th scope="col">Branch</th>
+                                    <th scope="col">Bank Type</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  @foreach ($banks ?? '' as $bank)
+                                  <tr>
+                                    <th scope="row">{{$bank->id}}</th>
+                                    <td>{{$bank->bank_name}}</td>
+                                    <td>{{$bank->branch}}</td>
+                                    <td>{{$bank->bank_type_id}}</td>
+                                  </tr>
+                                  @endforeach
+                                </tbody>
+                              </table>
+
+
+                        @endif
                     </ul>
                     </div>
                 </div>
