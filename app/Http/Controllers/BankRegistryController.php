@@ -18,12 +18,14 @@ class BankRegistryController extends Controller
 
         $bankRegistries = BankRegistry::with('banktype')->where('isInactive',0)->get();
 
+        $btList = BankType::select('id', 'bank_type')->get();
+
 
 
        //dd($bankRegistries);
        // $bankRegistries = BankRegistry::latest()->paginate(5);
-  
-        return view('bankregistry.index',compact('bankRegistries'))
+
+        return view('bankregistry.index',compact('bankRegistries', 'btList'))
         ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
@@ -34,12 +36,12 @@ class BankRegistryController extends Controller
      */
     public function create()
     {
-        
+
         $banktype = \App\BankType::where('isInactive',0)->pluck('bank_type', 'id');
         $selectedid = 1;
 
-        
-        return view('bankregistry.create', compact('selectedid','banktype'));  
+
+        return view('bankregistry.create', compact('selectedid','banktype'));
     }
 
     /**
@@ -89,9 +91,10 @@ class BankRegistryController extends Controller
         $banktype = \App\BankType::pluck('bank_type', 'id');
         $selectedid = 1;
 
-        
+
         return view('bankregistry.edit', compact('bankRegistry', 'banktype')); ;
     }
+
 
     /**
      * Update the specified resource in storage.
@@ -102,7 +105,7 @@ class BankRegistryController extends Controller
      */
     public function update(Request $request, BankRegistry $bankRegistry)
     {
-     
+
         $request->validate([
             'bank_name'=>['required', 'max:30', 'min:1'],
             'bank_type_id'=>'required',
@@ -129,7 +132,7 @@ class BankRegistryController extends Controller
        $bankRegistry->isInactive=1;
 
        $bankRegistry->save();
-        
+
 
         // $bankRegistry->delete();
 
@@ -137,5 +140,19 @@ class BankRegistryController extends Controller
                         ->with('success','Bank deleted successfully');
     }
 
-    
+    public function search(Request $request){
+        switch ($request->input('action')){
+            case 'search':
+                $bnquery = $request->input('bn-query');
+                $btquery = $request->input('bt-query');
+                $banks = BankRegistry::where('bank_name', 'like', "%$bnquery%")->where('bank_type_id', $btquery)->get();
+            break;
+
+            case 'clear':
+                $banks = null;
+            break;
+        }
+        return view('home')->with('banks', $banks);
+
+
 }

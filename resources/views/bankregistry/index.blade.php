@@ -15,7 +15,41 @@
         </div>
     </div>
 
+
+
    <div class="container">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-10 col-lg-8">
+            <form class="card card-sm">
+                <div class="card-body row no-gutters align-items-center">
+                    <div class="col-auto">
+                        <i class="fas fa-search h4 text-body"></i>
+                    </div>
+                    <!--end of col-->
+                    <div class="col">
+                        Bank ID
+                        <input class="form-control form-control-lg form-control-borderless" type="search" placeholder="Search for Bank ID">
+                        Bank Type
+                        <div class="form-group">
+                            <select class="form-control" name="banktype">
+                                @foreach($btList as $btype)
+                                  <option value="{{$btype->bank_type}}">{{$btype->bank_type}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <!--end of col-->
+                    <div class="col-auto">
+                        <button class="btn btn-lg btn-primary" type="submit">Search</button>
+                    </div>
+                    <!--end of col-->
+                </div>
+            </form>
+        </div>
+        <!--end of col-->
+    </div>
+    <br>
 
         <table class="table table-bordered">
         <tr>
@@ -32,9 +66,9 @@
             <td>{{$bankRegistry->branch}}</td>
         @endforeach
 
-    
-    
-    
+
+
+
 
 </div>
 @endguest
