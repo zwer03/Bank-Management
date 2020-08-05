@@ -20,7 +20,6 @@ Route::get('/', function () {
 });
 
 
-Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['middleware' => ['auth']], function(){
 
@@ -30,11 +29,11 @@ Route::group(['middleware' => ['auth']], function(){
 
     Route::resource('bank_types','BankTypeController');
 
+    Route::post('/search', 'BankRegistryController@search')->name('search');
+
+
 });
 
-Route::get('/search', 'BankRegistryController@search')->name('search')->middleware('auth');
-
-Route::get('/bank_registries', 'BankRegistryController@index')->name('home2')->middleware('auth');
 
 
 Auth::routes();

@@ -54,7 +54,7 @@ class BankRegistryController extends Controller
     {
         $this->validate(request(),
         [
-            'bank_name'=>['required', 'max:30', 'min:1'],
+            'bank_name'=>['required', 'max:30', 'min:1','alpha_num'],
             'bank_type_id'=>'required',
             'branch'=>['required', 'max:30','min:1'],
             'address'=>['required', 'max:50','min:1'],
@@ -144,10 +144,10 @@ class BankRegistryController extends Controller
 
                 $biquery = $request->input('bankid');
                 $btquery = $request->input('banktype');
-                if($btquery == ' ')
-                    $bankRegistries = BankRegistry::where('isInactive','!=', 1 )->where('id', '=', $biquery)->get();
-                else
-                    $bankRegistries = BankRegistry::where('isInactive','!=', 1 )->where('id', '=', $biquery)->orWhere('bank_type_id','=', $btquery)->get();
+                // if($btquery == ' ')
+                //     $bankRegistries = BankRegistry::where('isInactive','!=', 1 )->where('id', '=', $biquery)->get();
+                // else
+                $bankRegistries = BankRegistry::where('isInactive','!=', 1 )->where('id', '=', $biquery)->orWhere('bank_type_id','=', $btquery)->get();
                 $btList = BankType::select('id', 'bank_type')->get();
 
         return view('bankregistry.index',compact('bankRegistries', 'btList'))

@@ -15,7 +15,10 @@
 @include('layouts.homebutton')
 
    <div class="container">
-
+    <div class="col-auto">
+        <a class="btn btn-primary" href="{{ route('bank_types.create') }}"> Create Bank Type</a>
+    </div>
+    <br>
         <table class="table table-bordered">
         <tr>
             <th>ID</th>

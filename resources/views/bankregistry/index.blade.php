@@ -1,6 +1,5 @@
 @extends('layouts.app')
 
-)
 @section('navigation')
     @include('layouts.nav')
 @endsection
@@ -24,7 +23,8 @@
    <div class="container">
     <div class="row justify-content-center">
         <div class="col-12 col-md-10 col-lg-8">
-            <form class="card card-sm" type="get" action="{{route('search')}}">
+            <form class="card card-sm" method="post" action="{{route('search')}}">
+                @csrf
                 <div class="card-body row no-gutters align-items-center">
                     <div class="col-auto">
                         <i class="fas fa-search h4 text-body"></i>
@@ -36,7 +36,7 @@
                         Bank Type
                         <div class="form-group">
                             <select class="form-control" name="banktype">
-                                <option value=' '>Search by Bank Type </option>
+                                <option> </option>
                                 @foreach($btList as $btype)
                                   <option value="{{$btype->id}}">{{$btype->bank_type}}</option>
                                 @endforeach
@@ -56,6 +56,10 @@
     </div>
     <br>
 
+        <div class="col-auto">
+            <a class="btn btn-primary" href="{{ route('bank_registries.create') }}"> Register Bank</a>
+        </div>
+        <br>
         <table class="table table-bordered">
         <tr>
             <th>ID</th>
