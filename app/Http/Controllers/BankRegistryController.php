@@ -18,12 +18,14 @@ class BankRegistryController extends Controller
 
         $bankRegistries = BankRegistry::with('banktype')->where('isInactive',0)->get();
 
+        $btList = BankType::select('id', 'bank_type')->where('isInactive',0)->get();
+
 
 
        //dd($bankRegistries);
        // $bankRegistries = BankRegistry::latest()->paginate(5);
-  
-        return view('bankregistry.index',compact('bankRegistries'))
+
+        return view('bankregistry.index',compact('bankRegistries', 'btList'))
         ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
@@ -34,12 +36,12 @@ class BankRegistryController extends Controller
      */
     public function create()
     {
-        
+
         $banktype = \App\BankType::where('isInactive',0)->pluck('bank_type', 'id');
         $selectedid = 1;
 
-        
-        return view('bankregistry.create', compact('selectedid','banktype'));  
+
+        return view('bankregistry.create', compact('selectedid','banktype'));
     }
 
     /**
@@ -52,7 +54,7 @@ class BankRegistryController extends Controller
     {
         $this->validate(request(),
         [
-            'bank_name'=>['required', 'max:30', 'min:1'],
+            'bank_name'=>['required', 'max:30', 'min:1','alpha_num'],
             'bank_type_id'=>'required',
             'branch'=>['required', 'max:30','min:1'],
             'address'=>['required', 'max:50','min:1'],
@@ -89,9 +91,10 @@ class BankRegistryController extends Controller
         $banktype = \App\BankType::pluck('bank_type', 'id');
         $selectedid = 1;
 
-        
+
         return view('bankregistry.edit', compact('bankRegistry', 'banktype')); ;
     }
+
 
     /**
      * Update the specified resource in storage.
@@ -102,7 +105,7 @@ class BankRegistryController extends Controller
      */
     public function update(Request $request, BankRegistry $bankRegistry)
     {
-     
+
         $request->validate([
             'bank_name'=>['required', 'max:30', 'min:1'],
             'bank_type_id'=>'required',
@@ -129,7 +132,7 @@ class BankRegistryController extends Controller
        $bankRegistry->isInactive=1;
 
        $bankRegistry->save();
-        
+
 
         // $bankRegistry->delete();
 
@@ -137,5 +140,18 @@ class BankRegistryController extends Controller
                         ->with('success','Bank deleted successfully');
     }
 
-    
+    public function search(Request $request){
+
+                $biquery = $request->input('bankid');
+                $btquery = $request->input('banktype');
+                // if($btquery == ' ')
+                //     $bankRegistries = BankRegistry::where('isInactive','!=', 1 )->where('id', '=', $biquery)->get();
+                // else
+                $bankRegistries = BankRegistry::where('isInactive','!=', 1 )->where('id', '=', $biquery)->orWhere('bank_type_id','=', $btquery)->get();
+                $btList = BankType::select('id', 'bank_type')->get();
+
+        return view('bankregistry.index',compact('bankRegistries', 'btList'))
+        ->with('i', (request()->input('page', 1) - 1) * 5);
+    }
+
 }

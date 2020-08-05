@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\BankType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class BankTypeController extends Controller
 {
@@ -14,8 +15,10 @@ class BankTypeController extends Controller
      */
     public function index()
     {
+
         $bankTypes = BankType::where('isInactive',0)->get();
-  
+        Log::info('show contents'.$bankTypes);
+
         return view('banktype.index',compact('bankTypes'))
           ->with('i', (request()->input('page', 1) - 1) * 5);
     }
@@ -40,17 +43,17 @@ class BankTypeController extends Controller
     {
         $this->validate(request(),
         [
-            'bank_type'=>['required', 'max:20', 'min:7', 'not_regex:/^[a-zA-Z0-9]{4,10}$/'],
+            'bank_type'=>['required', 'max:20', 'min:7', 'alpha_num'],
             'description'=>['max:200', 'nullable'],
-              
-            
-            
-            
+
+
+
+
 
         ]);
 
         $banktype = BankType::create(request(['bank_type', 'description']));
-        
+
 
         return redirect()->back()->with('message', 'Bank Type Created');
     }
@@ -91,7 +94,7 @@ class BankTypeController extends Controller
 
             'bank_type'=>['required', 'max:20', 'min:7', 'regex:/[a-zA-Z0-9]{4,10}$/'],
             'description'=>['max:200', 'nullable'],
-            
+
         ]);
 
         $bankType->update($request->all());
@@ -112,10 +115,10 @@ class BankTypeController extends Controller
 
         $bankType->save();
          // $bankRegistry->delete();
- 
+
          return redirect()->route('bank_types.index')
                          ->with('success','Bank Type deleted successfully');
     }
 
-    
+
 }

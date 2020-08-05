@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 
+
 @section('content')
 
 
@@ -9,14 +10,13 @@
 
 @else
 
-    <div class="container col-lg-12 margin-tb">
-        <div class="pull-left">
-            <a class="btn btn-primary" href="{{ route('home') }}"> Back</a>
-        </div>
-    </div>
+@include('layouts.homebutton')
 
    <div class="container">
-
+    <div class="col-auto">
+        <a class="btn btn-primary" href="{{ route('bank_types.create') }}"> Create Bank Type</a>
+    </div>
+    <br>
         <table class="table table-bordered">
         <tr>
             <th>ID</th>
@@ -28,12 +28,12 @@
             <td><a class="nav-item" href="{{route('bank_types.edit', $bankType -> id)}}">{{$bankType->id}}</a></td>
             <td>{{$bankType->bank_type}}</td>
             <td>{{$bankType->description}}</td>
-    
+
         @endforeach
 
-    
-    
-    
+
+
+
 
 </div>
 @endguest

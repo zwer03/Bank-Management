@@ -2,19 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\BankType;
 use Illuminate\Http\Request;
 
 class BanklistController extends Controller
 {
-    public function list() {
-        $banks = [
-            'BPI',
-            'BDO',
-            'CHINABANK',
-        ];
+    public function btList() {
 
-        return view('banklist', [
-            'banks' => $banks,
-        ]);
+        $btList = BankType::select('id', 'bank_type')->get();
+
+        return view('/bankregistry.index', compact($btList));
     }
 }
