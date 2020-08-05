@@ -15,13 +15,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('auth.login');
-});
+// Route::get('/', function () {
+//     return view('auth.login');
+// });
 
 
 
 Route::group(['middleware' => ['auth']], function(){
+
+    Route::get('/', 'BankRegistryController@index');
 
     Route::redirect('password.reset', '/home', 301);
 
@@ -36,6 +38,7 @@ Route::group(['middleware' => ['auth']], function(){
 
 
 
-Auth::routes();
+
+Auth::routes(['password.request' => false]);
 
 
