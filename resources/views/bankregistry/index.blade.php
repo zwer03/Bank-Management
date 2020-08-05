@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+)
+@section('navigation')
+    @include('layouts.nav')
+@endsection
 
 @section('content')
 
@@ -8,13 +12,13 @@
 <div>Not Available</div>
 
 @else
-
+{{--
     <div class="container col-lg-12 margin-tb">
         <div class="pull-left">
             <a class="btn btn-primary" href="{{ route('home') }}"> Back</a>
         </div>
     </div>
-
+--}}
 
 
    <div class="container">
@@ -32,10 +36,10 @@
                         Bank Type
                         <div class="form-group">
                             <select class="form-control" name="banktype">
+                                <option value=' '>Search by Bank Type </option>
                                 @foreach($btList as $btype)
                                   <option value="{{$btype->id}}">{{$btype->bank_type}}</option>
                                 @endforeach
-                                <option value=' '>No Bank Type</option>
                             </select>
                         </div>
                     </div>

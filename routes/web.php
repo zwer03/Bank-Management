@@ -32,8 +32,9 @@ Route::group(['middleware' => ['auth']], function(){
 
 });
 
-Route::get('/search', 'BankRegistryController@search')->name('search');
+Route::get('/search', 'BankRegistryController@search')->name('search')->middleware('auth');
 
+Route::get('/bank_registries', 'BankRegistryController@index')->name('home2')->middleware('auth');
 
 
 Auth::routes();
