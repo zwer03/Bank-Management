@@ -141,18 +141,17 @@ class BankRegistryController extends Controller
     }
 
     public function search(Request $request){
-        switch ($request->input('action')){
-            case 'search':
-                $bnquery = $request->input('bn-query');
-                $btquery = $request->input('bt-query');
-                $banks = BankRegistry::where('bank_name', 'like', "%$bnquery%")->where('bank_type_id', $btquery)->get();
-            break;
 
-            case 'clear':
-                $banks = null;
-            break;
-        }
-        return view('home')->with('banks', $banks);
+                $biquery = $request->input('bankid');
+                $btquery = $request->input('banktype');
+                if($btquery == ' ')
+                    $bankRegistries = BankRegistry::where('isInactive','!=', 1 )->where('id', '=', $biquery)->get();
+                else
+                    $bankRegistries = BankRegistry::where('isInactive','!=', 1 )->where('id', '=', $biquery)->orWhere('bank_type_id','=', $btquery)->get();
+                $btList = BankType::select('id', 'bank_type')->get();
 
+        return view('bankregistry.index',compact('bankRegistries', 'btList'))
+        ->with('i', (request()->input('page', 1) - 1) * 5);
+    }
 
 }

@@ -20,7 +20,7 @@
    <div class="container">
     <div class="row justify-content-center">
         <div class="col-12 col-md-10 col-lg-8">
-            <form class="card card-sm">
+            <form class="card card-sm" type="get" action="{{route('search')}}">
                 <div class="card-body row no-gutters align-items-center">
                     <div class="col-auto">
                         <i class="fas fa-search h4 text-body"></i>
@@ -28,13 +28,14 @@
                     <!--end of col-->
                     <div class="col">
                         Bank ID
-                        <input class="form-control form-control-lg form-control-borderless" type="search" placeholder="Search for Bank ID">
+                        <input class="form-control form-control-lg form-control-borderless" type="search" name="bankid" placeholder="Search for Bank ID">
                         Bank Type
                         <div class="form-group">
                             <select class="form-control" name="banktype">
                                 @foreach($btList as $btype)
-                                  <option value="{{$btype->bank_type}}">{{$btype->bank_type}}</option>
+                                  <option value="{{$btype->id}}">{{$btype->bank_type}}</option>
                                 @endforeach
+                                <option value=' '>No Bank Type</option>
                             </select>
                         </div>
                     </div>
