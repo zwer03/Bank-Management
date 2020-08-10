@@ -13,20 +13,46 @@ class BankRegistryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $biquery = $request->input('bankid');
+        $btquery = $request->input('banktype');
 
-        $bankRegistries = BankRegistry::with('banktype')->where('isInactive',0)->orderBy('id')->get();
-
+        //query for bank type drop down list
         $btList = BankType::select('id', 'bank_type')->where('isInactive',0)->get();
+
+        //search query
+        if (is_null($biquery) ){
+            if ($btquery){
+                $bankRegistries = BankRegistry::where('isInactive','!=', 1 )->where('bank_type_id','=', $btquery)->get();
+             }
+             else{
+            $bankRegistries = BankRegistry::with('banktype')->where('isInactive',0)->orderBy('id')->get();
+             }
+        }
+        else{
+
+            if ($btquery){
+                $bankRegistries = BankRegistry::where('isInactive','!=', 1 )->where('id', '=', $biquery)->where('bank_type_id','=', $btquery)->get();
+            }
+            else{
+                $bankRegistries = BankRegistry::where('isInactive','!=', 1 )->where('id', '=', $biquery)->get();
+            }
+         }
+
+
+
+
+
+
 
 
 
        //dd($bankRegistries);
        // $bankRegistries = BankRegistry::latest()->paginate(5);
-
-        return view('bankregistry.index',compact('bankRegistries', 'btList'))
-        ->with('i', (request()->input('page', 1) - 1) * 5);
+       //dd($biquery);
+            return view('bankregistry.index',compact('bankRegistries', 'btList'))
+            ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
     /**
