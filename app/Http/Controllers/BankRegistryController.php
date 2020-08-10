@@ -147,7 +147,7 @@ class BankRegistryController extends Controller
                 // if($btquery == ' ')
                 //     $bankRegistries = BankRegistry::where('isInactive','!=', 1 )->where('id', '=', $biquery)->get();
                 // else
-                $bankRegistries = BankRegistry::where('isInactive','!=', 1 )->where('id', '=', $biquery)->orWhere('bank_type_id','=', $btquery)->get();
+                $bankRegistries = BankRegistry::where('isInactive','!=', 1 )->where('id', '=', $biquery)->where('bank_type_id','=', $btquery)->get();
                 $btList = BankType::select('id', 'bank_type')->get();
 
         return view('bankregistry.index',compact('bankRegistries', 'btList'))
