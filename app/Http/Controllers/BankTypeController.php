@@ -43,11 +43,8 @@ class BankTypeController extends Controller
     {
         $this->validate(request(),
         [
-            'bank_type'=>['required', 'max:20', 'min:7', 'alpha_num'],
+            'bank_type'=>['required', 'max:20', 'min:7', 'regex:/[a-zA-Z0-9\s]{4,10}$/'],
             'description'=>['max:200', 'nullable'],
-
-
-
 
 
         ]);
@@ -92,7 +89,7 @@ class BankTypeController extends Controller
 
         $request->validate([
 
-            'bank_type'=>['required', 'max:20', 'min:7', 'regex:/[a-zA-Z0-9]{4,10}$/'],
+            'bank_type'=>['required', 'max:20', 'min:7', 'regex:/[a-zA-Z0-9\s]{4,10}$/'],
             'description'=>['max:200', 'nullable'],
 
         ]);
@@ -118,6 +115,21 @@ class BankTypeController extends Controller
 
          return redirect()->route('bank_types.index')
                          ->with('success','Bank Type deleted successfully');
+    }
+
+
+
+    public function deleteAll(Request $request)
+    {
+
+       $ids = $request-> id;
+
+       foreach ($ids as $id) {
+        \DB::table('bank_types')->where('id', $id)->update(array('isInactive'=> 1));
+        }
+
+        return redirect()->route('bank_types.index')
+                        ->with('success','Bank Type deleted successfully');
     }
 
 

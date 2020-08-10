@@ -54,7 +54,7 @@ class BankRegistryController extends Controller
     {
         $this->validate(request(),
         [
-            'bank_name'=>['required', 'max:30', 'min:1','alpha_num'],
+            'bank_name'=>['required', 'max:30', 'min:1','regex:/[a-zA-Z0-9\s]{4,10}$/'],
             'bank_type_id'=>'required',
             'branch'=>['required', 'max:30','min:1'],
             'address'=>['required', 'max:50','min:1'],
@@ -107,7 +107,7 @@ class BankRegistryController extends Controller
     {
 
         $request->validate([
-            'bank_name'=>['required', 'max:30', 'min:1'],
+            'bank_name'=>['required', 'max:30', 'min:1', 'regex:/[a-zA-Z0-9\s]{4,10}$/'],
             'bank_type_id'=>'required',
             'branch'=>['required', 'max:30','min:1'],
             'address'=>['required', 'max:50','min:1'],
@@ -152,6 +152,23 @@ class BankRegistryController extends Controller
 
         return view('bankregistry.index',compact('bankRegistries', 'btList'))
         ->with('i', (request()->input('page', 1) - 1) * 5);
+    }
+
+
+    public function deleteAll(Request $request)
+    {
+
+
+       $ids = $request-> id;
+
+       foreach ($ids as $id) {
+        \DB::table('bank_registries')->where('id', $id)->update(array('isInactive'=> 1));
+        }
+
+       
+
+        return redirect()->route('bank_registries.index')
+                        ->with('success','Bank deleted successfully');
     }
 
 }

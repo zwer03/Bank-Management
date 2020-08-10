@@ -53,12 +53,17 @@
     </div>
     <br>
 
-        <div class="col-auto">
-            <a class="btn btn-primary" href="{{ route('bank_registries.create') }}"> Register Bank</a>
+        
+    <form method="post" action="{{route('deleteAllBankRegistry')}}">
+    @csrf
+
+        <div class="float-left m-1">
+            <a class="btn btn-primary" href="{{ route('bank_registries.create') }}"> Add</a>
         </div>
-        <br>
+        
         <table class="table table-bordered">
         <tr>
+            <th></th>
             <th>ID</th>
             <th>Bank Name</th>
             <th>Bank Type</th>
@@ -66,13 +71,18 @@
         </tr>
         @foreach ($bankRegistries as $bankRegistry)
         <tr>
+            <td><input name='id[]' type="checkbox" class="sub_chk" value="{{$bankRegistry->id}}">  </td>
             <td><a class="nav-item" href="{{route('bank_registries.edit', $bankRegistry -> id)}}">{{$bankRegistry->id}}</a></td>
             <td>{{$bankRegistry->bank_name}}</td>
             <td>{{$bankRegistry->banktype['bank_type']}}</td>
             <td>{{$bankRegistry->branch}}</td>
         @endforeach
 
-
+        <div class="float-left m-1">
+            <button style="cursor:pointer" type="submit" class="btn btn-primary">Delete</button>
+        </div>
+        
+        </form>
 
 
 
