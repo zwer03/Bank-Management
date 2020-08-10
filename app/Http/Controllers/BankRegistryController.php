@@ -161,9 +161,9 @@ class BankRegistryController extends Controller
 
        $ids = $request-> id;
 
-       foreach ($ids as $id) {
-        \DB::table('bank_registries')->where('id', $id)->update(array('isInactive'=> 1));
-        }
+       
+        \DB::table('bank_registries')->whereIn('id', $ids)->update(array('isInactive'=> 1));
+        
 
        
         return redirect()->route('bank_registries.index')

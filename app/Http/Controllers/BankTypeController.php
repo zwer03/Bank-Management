@@ -124,9 +124,9 @@ class BankTypeController extends Controller
 
        $ids = $request-> id;
 
-       foreach ($ids as $id) {
-        \DB::table('bank_types')->where('id', $id)->update(array('isInactive'=> 1));
-        }
+       
+        \DB::table('bank_types')->whereIn('id', $ids)->update(array('isInactive'=> 1));
+        
 
         return redirect()->route('bank_types.index')
                         ->with('success','Bank Type deleted successfully');
