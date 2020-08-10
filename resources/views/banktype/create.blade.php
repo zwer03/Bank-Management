@@ -24,7 +24,7 @@
 
     <div class="form-group">
         <label for="bank_type">{{__('Bank Type')}}</label>
-        <input type="text" class="form-control @error('bank_type') is-invalid @enderror" id="bank_type" name="bank_type">
+    <input type="text" class="form-control @error('bank_type') is-invalid @enderror" id="bank_type" name="bank_type" value="{{old('bank_type')}}">
 
             @error('bank_type')
                 <span class="invalid-feedback" role="alert">
@@ -35,7 +35,7 @@
 
     <div class="form-group">
         <label for="description">{{__('Description')}}</label>
-        <input type="text" class="form-control @error('description') is-invalid @enderror" id="description" name="description">
+    <input type="text" class="form-control @error('description') is-invalid @enderror" id="description" name="description" value="{{old('description')}}">
 
             @error('description')
                 <span class="invalid-feedback" role="alert">
