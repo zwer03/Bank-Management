@@ -16,7 +16,7 @@ class BankTypeController extends Controller
     public function index()
     {
 
-        $bankTypes = BankType::where('isInactive',0)->get();
+        $bankTypes = BankType::where('isInactive',0)->orderBy('id')->get();
         Log::info('show contents'.$bankTypes);
 
         return view('banktype.index',compact('bankTypes'))

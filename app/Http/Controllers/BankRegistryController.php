@@ -16,7 +16,7 @@ class BankRegistryController extends Controller
     public function index()
     {
 
-        $bankRegistries = BankRegistry::with('banktype')->where('isInactive',0)->get();
+        $bankRegistries = BankRegistry::with('banktype')->where('isInactive',0)->orderBy('id')->get();
 
         $btList = BankType::select('id', 'bank_type')->where('isInactive',0)->get();
 
