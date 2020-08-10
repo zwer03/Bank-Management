@@ -43,7 +43,7 @@ class BankTypeController extends Controller
     {
         $this->validate(request(),
         [
-            'bank_type'=>['required', 'max:20', 'min:7', 'alpha_num'],
+            'bank_type'=>['required', 'max:20', 'min:7', 'regex:/[a-zA-Z0-9]{4,10}$/'],
             'description'=>['max:200', 'nullable'],
 
 
