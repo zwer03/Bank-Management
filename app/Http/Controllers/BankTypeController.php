@@ -15,8 +15,7 @@ class BankTypeController extends Controller
      */
     public function index()
     {
-
-        $bankTypes = BankType::where('isInactive',0)->paginate(4);
+        $bankTypes = BankType::where('isInactive',0)->orderBy('id')->paginate(4);
         Log::info('show contents'.$bankTypes);
 
         return view('banktype.index',compact('bankTypes'));
@@ -42,10 +41,8 @@ class BankTypeController extends Controller
     {
         $this->validate(request(),
         [
-            'bank_type'=>['required', 'max:20', 'min:7', 'regex:/[a-zA-Z0-9\s]{4,10}$/'],
+            'bank_type'=>['required', 'max:20', 'min:7', 'regex:/[a-zA-Z0-9]{4,10}$/'],
             'description'=>['max:200', 'nullable'],
-
-
         ]);
 
         $banktype = BankType::create(request(['bank_type', 'description']));

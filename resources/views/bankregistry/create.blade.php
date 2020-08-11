@@ -21,7 +21,7 @@
 
                 <div class="form-group">
                     <label for="bank_name">Bank Name:</label>
-                    <input type="text" class="form-control @error('bank_name') is-invalid @enderror" id="bank_name" name="bank_name">
+                    <input type="text" class="form-control @error('bank_name') is-invalid @enderror" id="bank_name" name="bank_name" value="{{old('bank_name')}}">
 
                     @error('bank_name')
                     <span class="invalid-feedback" role="alert">
@@ -38,7 +38,7 @@
 
             <div class="form-group">
                 <label for="branch">Branch:</label>
-                <input type="text" class="form-control @error('branch') is-invalid @enderror" id="branch" name="branch">
+            <input type="text" class="form-control @error('branch') is-invalid @enderror" id="branch" name="branch" value="{{old('branch')}}">
 
                 @error('branch')
                     <span class="invalid-feedback" role="alert">
@@ -50,7 +50,7 @@
 
             <div class="form-group">
                 <label for="address">Address:</label>
-                <input type="text" class="form-control @error('address') is-invalid @enderror" id="address" name="address">
+            <input type="text" class="form-control @error('address') is-invalid @enderror" id="address" name="address" value="{{old('address')}}">
 
                 @error('address')
                     <span class="invalid-feedback" role="alert">
@@ -62,7 +62,7 @@
 
             <div class="form-group">
                 <label for="remarks">Remarks:</label>
-                <input type="text" class="form-control @error('remarks') is-invalid @enderror" id="remarks" name="remarks">
+            <input type="text" class="form-control @error('remarks') is-invalid @enderror" id="remarks" name="remarks" value="{{old('remarks')}}">
 
                 @error('remarks')
                     <span class="invalid-feedback" role="alert">

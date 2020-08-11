@@ -31,7 +31,9 @@ Route::group(['middleware' => ['auth']], function(){
 
     Route::resource('bank_types','BankTypeController');
 
-    Route::post('/search', 'BankRegistryController@search')->name('search');
+    Route::post('/', 'BankRegistryController@index')->name('search');
+
+    //Route::post('/search', 'BankRegistryController@search')->name('search');
 
     Route::post('/deleteAllBankRegistry', 'BankRegistryController@deleteAll')->name('deleteAllBankRegistry');
 
