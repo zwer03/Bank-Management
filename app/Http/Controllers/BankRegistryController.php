@@ -43,6 +43,7 @@ class BankRegistryController extends Controller
     public function create()
     {
 
+        session()->forget('bank_name','bank_type_id','branch','address','remarks');
         $banktype = \App\BankType::where('isInactive',0)->pluck('bank_type', 'id');
         $selectedid = 1;
 
@@ -58,8 +59,9 @@ class BankRegistryController extends Controller
      */
     public function store(Request $request)
     {
-        
-
+       
+        $oldvalue = $request->session()->all();
+ 
         $this->validate(request(),
         [
             'bank_name'=>['required', 'max:30', 'min:1','regex:/[a-zA-Z0-9]{4,10}$/'],
@@ -71,9 +73,19 @@ class BankRegistryController extends Controller
 
         ]);
 
+        session([
+            'bank_name'=>request('bank_name'),
+            'bank_type_id'=>request('bank_type_id'),
+            'branch'=>request('branch'),
+            'address'=>request('address'),
+            'remarks'=>request('remarks')
+        ]);
 
-        $bankregistry = BankRegistry::create(request(['bank_name', 'bank_type_id', 'branch', 'address', 'remarks']));
-
+        $value = $request->session()->all();
+        
+        if ($value != $oldvalue){
+         $bankregistry = BankRegistry::create(request(['bank_name', 'bank_type_id', 'branch', 'address', 'remarks']));
+        }
 
         return redirect()->back()->with('message', 'Bank Registered');
     }
@@ -157,8 +169,8 @@ class BankRegistryController extends Controller
                 // if($btquery == ' ')
                 //     $bankRegistries = BankRegistry::where('isInactive','!=', 1 )->where('id', '=', $biquery)->get();
                 // else
-                $bankRegistries = BankRegistry::where('isInactive','!=', 1 )->where('id', '=', $biquery)->orWhere('bank_type_id','=', $btquery)->where('isInactive','!=', 1 )->get();
-                $btList = BankType::select('id', 'bank_type')->get();
+                $bankRegistries = BankRegistry::where('isInactive','!=', 1 )->where('id', '=', $biquery)->orWhere('bank_type_id','=', $btquery)->where('isInactive','!=', 1 )->paginate(4);
+                $btList = BankType::select('id', 'bank_type');
 
         return view('bankregistry.index',compact('bankRegistries', 'btList'))
         ->with('i', (request()->input('page', 1) - 1) * 5);

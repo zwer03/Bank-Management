@@ -54,7 +54,7 @@
     <br>
 
     <div class="container">
-    <form  method="post" action="{{route('deleteAllBankRegistry')}}">
+    <form  method="post" action="{{route('bank_registries.deleteAll')}}">
     @csrf
 
         <div class="float-left m-1">

@@ -10,17 +10,25 @@
 
 @else
 
-@include('layouts.homebutton')
-    <br>
-   <div class="container col-lg-12 margin-tb">
+
+  
+<div class="container col-lg-12 margin-tb">
+    @include('layouts.homebutton')
+      <br>
+
+   
+    
+    <div class="container">
+
     <div class="float-left m-1">
         <a class="btn btn-primary" href="{{ route('bank_types.create') }}"> Add</a>
     </div>
 
-   
-    
+    <div class="float-left m-1" >
+        <button style="cursor:pointer" type="submit" class="btn btn-primary">Delete</button>
+    </div>
 
-    <form method="post" action="{{route('deleteAllBankType')}}">
+    <form method="post" action="{{route('bank_types.deleteAll')}}">
     @csrf
         <table class="table table-bordered">
         <tr>
@@ -39,8 +47,10 @@
         @endforeach
 
 
-    <div class="float-left m-1" >
-        <button style="cursor:pointer" type="submit" class="btn btn-primary">Delete</button>
+    
+
+    <div class="float-right m-1">
+        {{ $bankTypes->links() }}
     </div>
 
     <div class="float-right m-1">
@@ -48,6 +58,7 @@
     </div>
         
      </form>
+     </div>
 
 
 
