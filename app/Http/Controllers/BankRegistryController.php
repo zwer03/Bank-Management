@@ -59,10 +59,9 @@ class BankRegistryController extends Controller
      */
     public function store(Request $request)
     {
-        
-
+       
         $oldvalue = $request->session()->all();
-        
+ 
         $this->validate(request(),
         [
             'bank_name'=>['required', 'max:30', 'min:1','regex:/[a-zA-Z0-9]{4,10}$/'],
@@ -73,7 +72,6 @@ class BankRegistryController extends Controller
 
 
         ]);
-
 
         session([
             'bank_name'=>request('bank_name'),

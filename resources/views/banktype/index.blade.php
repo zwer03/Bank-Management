@@ -52,6 +52,10 @@
     <div class="float-right m-1">
         {{ $bankTypes->links() }}
     </div>
+
+    <div class="float-right m-1">
+        {{ $bankTypes->links() }}
+    </div>
         
      </form>
      </div>
