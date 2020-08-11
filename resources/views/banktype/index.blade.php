@@ -11,13 +11,13 @@
 @else
 
 
-  
+
 <div class="container col-lg-12 margin-tb">
     @include('layouts.homebutton')
       <br>
 
-   
-    
+
+
     <div class="container">
 
     <div class="float-left m-1">
@@ -33,8 +33,8 @@
         <table class="table table-bordered">
         <tr>
             <th></th>
-            <th>ID</th>
-            <th>Bank Type</th>
+            <th>@sortablelink('id','ID')</th>
+            <th>@sortablelink('bank_type','Bank Type')</th>
             <th>Description</th>
         </tr>
         @foreach ($bankTypes as $bankType)
@@ -47,16 +47,13 @@
         @endforeach
 
 
-    
+
+
 
     <div class="float-right m-1">
-        {{ $bankTypes->links() }}
+        {!! $bankTypes->appends(Request::except('page'))->render() !!}
     </div>
 
-    <div class="float-right m-1">
-        {{ $bankTypes->links() }}
-    </div>
-        
      </form>
      </div>
 

@@ -17,7 +17,7 @@ class BankRegistryController extends Controller
     {
         $bank_id = $request->input('bank_id');
         $bank_type = $request->input('bank_type');
-      
+
         //query for bank type drop down list
         $bankTypeList = BankType::select('id', 'bank_type')->where('isInactive',0)->get();
 
@@ -29,7 +29,7 @@ class BankRegistryController extends Controller
         $query->when($bank_type,function($q, $bank_type){
             return $q->where('bank_type_id','=', $bank_type);
         });
-        $bankRegistries = $query->orderBy('id')->paginate(4);
+        $bankRegistries = $query->sortable('id')->paginate(4);
 
 
         return view('bankregistry.index',compact('bankRegistries', 'bankTypeList'));
@@ -59,9 +59,9 @@ class BankRegistryController extends Controller
      */
     public function store(Request $request)
     {
-       
+
         $oldvalue = $request->session()->all();
- 
+
         $this->validate(request(),
         [
             'bank_name'=>['required', 'max:30', 'min:1','regex:/[a-zA-Z0-9]{4,10}$/'],
@@ -82,7 +82,7 @@ class BankRegistryController extends Controller
         ]);
 
         $value = $request->session()->all();
-        
+
         if ($value != $oldvalue){
          $bankregistry = BankRegistry::create(request(['bank_name', 'bank_type_id', 'branch', 'address', 'remarks']));
         }
@@ -183,11 +183,11 @@ class BankRegistryController extends Controller
 
        $ids = $request-> id;
 
-       
-        \DB::table('bank_registries')->whereIn('id', $ids)->update(array('isInactive'=> 1));
-        
 
-       
+        \DB::table('bank_registries')->whereIn('id', $ids)->update(array('isInactive'=> 1));
+
+
+
         return redirect()->route('bank_registries.index')
                         ->with('success','Bank deleted successfully');
     }
