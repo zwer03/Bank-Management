@@ -17,7 +17,7 @@ class BankRegistryController extends Controller
     {
         $bank_id = $request->input('bank_id');
         $bank_type = $request->input('bank_type');
-
+      
         //query for bank type drop down list
         $bankTypeList = BankType::select('id', 'bank_type')->where('isInactive',0)->get();
 
@@ -29,11 +29,10 @@ class BankRegistryController extends Controller
         $query->when($bank_type,function($q, $bank_type){
             return $q->where('bank_type_id','=', $bank_type);
         });
-        $bankRegistries = $query->orderBy('id')->get();
+        $bankRegistries = $query->orderBy('id')->paginate(4);
 
 
-        return view('bankregistry.index',compact('bankRegistries', 'bankTypeList'))
-        ->with('i', (request()->input('page', 1) - 1) * 5);
+        return view('bankregistry.index',compact('bankRegistries', 'bankTypeList'));
     }
 
     /**
@@ -59,6 +58,8 @@ class BankRegistryController extends Controller
      */
     public function store(Request $request)
     {
+        
+
         $this->validate(request(),
         [
             'bank_name'=>['required', 'max:30', 'min:1','regex:/[a-zA-Z0-9]{4,10}$/'],
@@ -70,7 +71,9 @@ class BankRegistryController extends Controller
 
         ]);
 
+
         $bankregistry = BankRegistry::create(request(['bank_name', 'bank_type_id', 'branch', 'address', 'remarks']));
+
 
         return redirect()->back()->with('message', 'Bank Registered');
     }
@@ -95,7 +98,7 @@ class BankRegistryController extends Controller
     public function edit(BankRegistry $bankRegistry)
     {
 
-        $banktype = \App\BankType::pluck('bank_type', 'id');
+        $banktype = \App\BankType::where('isInactive',0)->pluck('bank_type', 'id');
         $selectedid = 1;
 
 
