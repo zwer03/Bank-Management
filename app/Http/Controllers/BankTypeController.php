@@ -16,11 +16,10 @@ class BankTypeController extends Controller
     public function index()
     {
 
-        $bankTypes = BankType::where('isInactive',0)->get();
+        $bankTypes = BankType::where('isInactive',0)->paginate(4);
         Log::info('show contents'.$bankTypes);
 
-        return view('banktype.index',compact('bankTypes'))
-          ->with('i', (request()->input('page', 1) - 1) * 5);
+        return view('banktype.index',compact('bankTypes'));
     }
 
     /**

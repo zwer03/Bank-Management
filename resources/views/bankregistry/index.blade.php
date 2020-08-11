@@ -53,8 +53,8 @@
     </div>
     <br>
 
-        
-    <form method="post" action="{{route('deleteAllBankRegistry')}}">
+    <div class="container">
+    <form  method="post" action="{{route('deleteAllBankRegistry')}}">
     @csrf
 
         <div class="float-left m-1">
@@ -77,12 +77,19 @@
             <td>{{$bankRegistry->banktype['bank_type']}}</td>
             <td>{{$bankRegistry->branch}}</td>
         @endforeach
+        </div>
+        
 
         <div class="float-left m-1">
             <button style="cursor:pointer" type="submit" class="btn btn-primary">Delete</button>
         </div>
         
         </form>
+       
+        <div class="float-right m-1">
+        {{ $bankRegistries->links() }}
+        </div>
+
 
 
 

@@ -42,6 +42,10 @@
     <div class="float-left m-1" >
         <button style="cursor:pointer" type="submit" class="btn btn-primary">Delete</button>
     </div>
+
+    <div class="float-right m-1">
+        {{ $bankTypes->links() }}
+    </div>
         
      </form>
 
