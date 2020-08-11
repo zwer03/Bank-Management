@@ -45,11 +45,6 @@ class BankTypeController extends Controller
         [
             'bank_type'=>['required', 'max:20', 'min:7', 'regex:/[a-zA-Z0-9]{4,10}$/'],
             'description'=>['max:200', 'nullable'],
-
-
-
-
-
         ]);
 
         $banktype = BankType::create(request(['bank_type', 'description']));
@@ -92,7 +87,7 @@ class BankTypeController extends Controller
 
         $request->validate([
 
-            'bank_type'=>['required', 'max:20', 'min:7', 'regex:/[a-zA-Z0-9]{4,10}$/'],
+            'bank_type'=>['required', 'max:20', 'min:7', 'regex:/[a-zA-Z0-9\s]{4,10}$/'],
             'description'=>['max:200', 'nullable'],
 
         ]);
@@ -118,6 +113,21 @@ class BankTypeController extends Controller
 
          return redirect()->route('bank_types.index')
                          ->with('success','Bank Type deleted successfully');
+    }
+
+
+
+    public function deleteAll(Request $request)
+    {
+
+       $ids = $request-> id;
+
+       
+        \DB::table('bank_types')->whereIn('id', $ids)->update(array('isInactive'=> 1));
+        
+
+        return redirect()->route('bank_types.index')
+                        ->with('success','Bank Type deleted successfully');
     }
 
 
