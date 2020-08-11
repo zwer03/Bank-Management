@@ -29,6 +29,7 @@ class BankTypeController extends Controller
      */
     public function create()
     {
+        session()->forget('bank_type','description');
         return view('banktype.create');
     }
 
@@ -40,6 +41,8 @@ class BankTypeController extends Controller
      */
     public function store(Request $request)
     {
+        $oldvalue = $request->session()->all();
+
         $this->validate(request(),
         [
             'bank_type'=>['required', 'max:20', 'min:7', 'regex:/[a-zA-Z0-9\s]{4,10}$/'],
@@ -48,7 +51,16 @@ class BankTypeController extends Controller
 
         ]);
 
+        session([
+            'bank_type'=>request('bank_type'),
+            'bank_description'=>request('bank_description'),
+        ]);
+
+        $value = $request->session()->all();
+
+        if ($value != $oldvalue){
         $banktype = BankType::create(request(['bank_type', 'description']));
+        }
 
 
         return redirect()->back()->with('message', 'Bank Type Created');
