@@ -54,7 +54,7 @@ class BankRegistryController extends Controller
     {
         $this->validate(request(),
         [
-            'bank_name'=>['required', 'max:30', 'min:1','alpha_num'],
+            'bank_name'=>['required', 'max:30', 'min:1','regex:/[a-zA-Z0-9\s]{4,10}$/'],
             'bank_type_id'=>'required',
             'branch'=>['required', 'max:30','min:1'],
             'address'=>['required', 'max:50','min:1'],
@@ -107,7 +107,7 @@ class BankRegistryController extends Controller
     {
 
         $request->validate([
-            'bank_name'=>['required', 'max:30', 'min:1'],
+            'bank_name'=>['required', 'max:30', 'min:1', 'regex:/[a-zA-Z0-9\s]{4,10}$/'],
             'bank_type_id'=>'required',
             'branch'=>['required', 'max:30','min:1'],
             'address'=>['required', 'max:50','min:1'],
@@ -147,11 +147,27 @@ class BankRegistryController extends Controller
                 // if($btquery == ' ')
                 //     $bankRegistries = BankRegistry::where('isInactive','!=', 1 )->where('id', '=', $biquery)->get();
                 // else
-                $bankRegistries = BankRegistry::where('isInactive','!=', 1 )->where('id', '=', $biquery)->orWhere('bank_type_id','=', $btquery)->get();
+                $bankRegistries = BankRegistry::where('isInactive','!=', 1 )->where('id', '=', $biquery)->orWhere('bank_type_id','=', $btquery)->where('isInactive','!=', 1 )->get();
                 $btList = BankType::select('id', 'bank_type')->get();
 
         return view('bankregistry.index',compact('bankRegistries', 'btList'))
         ->with('i', (request()->input('page', 1) - 1) * 5);
+    }
+
+
+    public function deleteAll(Request $request)
+    {
+
+
+       $ids = $request-> id;
+
+       
+        \DB::table('bank_registries')->whereIn('id', $ids)->update(array('isInactive'=> 1));
+        
+
+       
+        return redirect()->route('bank_registries.index')
+                        ->with('success','Bank deleted successfully');
     }
 
 }
