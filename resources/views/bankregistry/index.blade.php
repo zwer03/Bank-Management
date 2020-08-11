@@ -29,10 +29,10 @@
                     <!--end of col-->
                     <div class="col">
                         Bank ID
-                        <input class="form-control form-control-lg form-control-borderless" type="search" name="bankid" placeholder="Search for Bank ID">
+                        <input class="form-control form-control-lg form-control-borderless" type="search" name="bank_id" placeholder="Search for Bank ID">
                         Bank Type
                         <div class="form-group">
-                            <select class="form-control" name="banktype">
+                            <select class="form-control" name="bank_type">
                                 <option> </option>
                                 @foreach($bankTypeList as $bankType)
                                   <option value="{{$bankType->id}}">{{$bankType->bank_type}}</option>

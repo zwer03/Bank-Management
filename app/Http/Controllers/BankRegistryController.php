@@ -15,8 +15,8 @@ class BankRegistryController extends Controller
      */
     public function index(Request $request)
     {
-        $bank_id = $request->input('bankid');
-        $bank_type = $request->input('banktype');
+        $bank_id = $request->input('bank_id');
+        $bank_type = $request->input('bank_type');
 
         //query for bank type drop down list
         $bankTypeList = BankType::select('id', 'bank_type')->where('isInactive',0)->get();
