@@ -13,19 +13,26 @@ class BankRegistryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $bank_id = $request->input('bank_id');
+        $bank_type = $request->input('bank_type');
 
-        $bankRegistries = BankRegistry::with('banktype')->where('isInactive',0)->get();
+        //query for bank type drop down list
+        $bankTypeList = BankType::select('id', 'bank_type')->where('isInactive',0)->get();
 
-        $btList = BankType::select('id', 'bank_type')->where('isInactive',0)->get();
+        //search query
+        $query = BankRegistry::where('isInactive','!=', 1 );
+        $query->when($bank_id, function($q, $bank_id){
+            return $q->where('id', '=', $bank_id);
+        });
+        $query->when($bank_type,function($q, $bank_type){
+            return $q->where('bank_type_id','=', $bank_type);
+        });
+        $bankRegistries = $query->orderBy('id')->get();
 
 
-
-       //dd($bankRegistries);
-       // $bankRegistries = BankRegistry::latest()->paginate(5);
-
-        return view('bankregistry.index',compact('bankRegistries', 'btList'))
+        return view('bankregistry.index',compact('bankRegistries', 'bankTypeList'))
         ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
@@ -54,7 +61,7 @@ class BankRegistryController extends Controller
     {
         $this->validate(request(),
         [
-            'bank_name'=>['required', 'max:30', 'min:1','regex:/[a-zA-Z0-9\s]{4,10}$/'],
+            'bank_name'=>['required', 'max:30', 'min:1','regex:/[a-zA-Z0-9]{4,10}$/'],
             'bank_type_id'=>'required',
             'branch'=>['required', 'max:30','min:1'],
             'address'=>['required', 'max:50','min:1'],
