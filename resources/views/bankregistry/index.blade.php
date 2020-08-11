@@ -34,8 +34,8 @@
                         <div class="form-group">
                             <select class="form-control" name="banktype">
                                 <option> </option>
-                                @foreach($btList as $btype)
-                                  <option value="{{$btype->id}}">{{$btype->bank_type}}</option>
+                                @foreach($bankTypeList as $bankType)
+                                  <option value="{{$bankType->id}}">{{$bankType->bank_type}}</option>
                                 @endforeach
                             </select>
                         </div>

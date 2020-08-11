@@ -15,44 +15,25 @@ class BankRegistryController extends Controller
      */
     public function index(Request $request)
     {
-        $biquery = $request->input('bankid');
-        $btquery = $request->input('banktype');
+        $bank_id = $request->input('bankid');
+        $bank_type = $request->input('banktype');
 
         //query for bank type drop down list
-        $btList = BankType::select('id', 'bank_type')->where('isInactive',0)->get();
+        $bankTypeList = BankType::select('id', 'bank_type')->where('isInactive',0)->get();
 
         //search query
-        if (is_null($biquery) ){
-            if ($btquery){
-                $bankRegistries = BankRegistry::where('isInactive','!=', 1 )->where('bank_type_id','=', $btquery)->get();
-             }
-             else{
-            $bankRegistries = BankRegistry::with('banktype')->where('isInactive',0)->orderBy('id')->get();
-             }
-        }
-        else{
-
-            if ($btquery){
-                $bankRegistries = BankRegistry::where('isInactive','!=', 1 )->where('id', '=', $biquery)->where('bank_type_id','=', $btquery)->get();
-            }
-            else{
-                $bankRegistries = BankRegistry::where('isInactive','!=', 1 )->where('id', '=', $biquery)->get();
-            }
-         }
+        $query = BankRegistry::where('isInactive','!=', 1 );
+        $query->when($bank_id, function($q, $bank_id){
+            return $q->where('id', '=', $bank_id);
+        });
+        $query->when($bank_type,function($q, $bank_type){
+            return $q->where('bank_type_id','=', $bank_type);
+        });
+        $bankRegistries = $query->orderBy('id')->get();
 
 
-
-
-
-
-
-
-
-       //dd($bankRegistries);
-       // $bankRegistries = BankRegistry::latest()->paginate(5);
-       //dd($biquery);
-            return view('bankregistry.index',compact('bankRegistries', 'btList'))
-            ->with('i', (request()->input('page', 1) - 1) * 5);
+        return view('bankregistry.index',compact('bankRegistries', 'bankTypeList'))
+        ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
     /**
