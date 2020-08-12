@@ -15,7 +15,7 @@ class BankTypeController extends Controller
      */
     public function index()
     {
-        $bankTypes = BankType::where('isInactive',0)->orderBy('id')->paginate(4);
+        $bankTypes = BankType::where('isInactive',0)->sortable('id')->paginate(4);
         Log::info('show contents'.$bankTypes);
         return view('banktype.index',compact('bankTypes'));
     }
@@ -131,9 +131,9 @@ class BankTypeController extends Controller
 
        $ids = $request-> id;
 
-       
+
         \DB::table('bank_types')->whereIn('id', $ids)->update(array('isInactive'=> 1));
-        
+
 
         return redirect()->route('bank_types.index')
                         ->with('success','Bank Type deleted successfully');

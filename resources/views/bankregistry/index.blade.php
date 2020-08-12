@@ -24,7 +24,7 @@
                 @csrf
                 <div class="card-body row no-gutters align-items-center">
                     <div class="col-auto">
-                        <i class="fas fa-search h4 text-body"></i>
+                        <i class=" h4 text-body"></i>
                     </div>
                     <!--end of col-->
                     <div class="col">
@@ -60,14 +60,16 @@
         <div class="float-left m-1">
             <a class="btn btn-primary" href="{{ route('bank_registries.create') }}"> Add</a>
         </div>
-        
+
+
+
         <table class="table table-bordered">
         <tr>
             <th></th>
-            <th>ID</th>
-            <th>Bank Name</th>
-            <th>Bank Type</th>
-            <th>Branch</th>
+            <th>@sortablelink('id', 'ID')</th>
+            <th>@sortablelink('bank_name', 'Bank Name')</th>
+            <th>@sortablelink('bank_type_id', 'Bank Type')</th>
+            <th>@sortablelink('branch', 'Branch')</th>
         </tr>
         @foreach ($bankRegistries as $bankRegistry)
         <tr>
@@ -78,16 +80,18 @@
             <td>{{$bankRegistry->branch}}</td>
         @endforeach
         </div>
-        
+
 
         <div class="float-left m-1">
             <button style="cursor:pointer" type="submit" class="btn btn-primary">Delete</button>
         </div>
-        
+
+
         </form>
-       
+
+
         <div class="float-right m-1">
-        {{ $bankRegistries->links() }}
+        {!! $bankRegistries->appends(Request::except('page'))->render() !!}
         </div>
 
 
